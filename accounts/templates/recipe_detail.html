@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}{{ recipe.title }}{% endblock %}
+{% block content %}
+
+    <div class="recipe-detail">
+        <a href="{% url 'recipe_detail' recipe.id %}" class="recipe-card">
+        <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}">
+        <h4>{{ recipe.title }}</h4>
+        </a>
+
+        <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}" class="detail-img">
+        <h2>{{ recipe.title }}</h2>
+        <p>{{ recipe.short_description }}</p>
+        <p>By {{ recipe.user.username }}</p>
+        
+        <!-- Likes -->
+        <form method="POST" action="{% url 'like_recipe' recipe.id %}">
+            {% csrf_token %}
+            <button type="submit">
+                {% if user in recipe.likes.all %}
+                    ❤️ Unlike
+                {% else %}
+                    🤍 Like
+                {% endif %}
+                ({{ recipe.total_likes }})
+            </button>
+        </form>
+
+        <!-- Comments -->
+        <h3>Comments</h3>
+        <div class="comments">
+            {% for comment in recipe.comments.all %}
+                <p><strong>{{ comment.user.username }}:</strong> {{ comment.content }}</p>
+            {% empty %}
+                <p>No comments yet.</p>
+            {% endfor %}
+        </div>
+
+        <form method="POST">
+            {% csrf_token %}
+            <input type="text" name="content" placeholder="Add a comment..." required>
+            <button type="submit">Post</button>
+        </form>
+    </div>
+
+
+{% endblock %}

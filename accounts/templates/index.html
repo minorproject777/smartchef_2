@@ -1,0 +1,127 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartChef</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    
+    <!-- Main CSS with auto-versioning -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}?v={% now "U" %}">
+</head>
+
+<body>
+   <header>
+    <input type="checkbox" id="toggler">
+    <label for="toggler" class="fas fa-bars"></label>
+
+    <div class="logo-container">
+        <img src="{% static 'images/chef.png' %}" alt="Chef Logo">
+        <span class="logo-text">SMARTCHEF</span>
+    </div>
+
+    <nav class="navbar">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#review">Review</a>
+        <a href="#contactus">Contact Us</a>
+    </nav>
+
+    <div class="icons">
+        <a href="{% url 'login' %}" class="fas fa-user fa-5x"></a>
+    </div>
+  </header>
+
+  <!-- Home section -->
+  <section class="home" id="home">
+    <div class="content">
+      <h3>Your Personalized Cookbook</h3>
+      <span>From Ingredients to Inspiration</span>
+      <p>
+        Not sure what to cook?<br>
+        Use what you have, skip the guesswork.<br>
+        Explore new dishes, share your own, and join a vibrant cooking community.
+      </p>
+      <a href="{% url 'login' %}" class="btn">Start Today</a>
+    </div>
+
+    <div class="subb">
+      <img src="{% static 'images/leaf.jpeg' %}" alt="Leaf">
+    </div>
+  </section>
+
+  <!-- About section -->
+  <section class="about" id="about">
+      <h1 class="heading"><span> About </span> us </h1>
+      <div class="row">
+        <div class="video-container">
+          <video src="{% static 'videos/vdo.mp4' %}" loop autoplay muted></video>
+          <h3>Get To Know Us</h3>
+        </div>
+
+        <div class="content">
+           <p>
+            Welcome to <strong>SmartChef</strong> – your intelligent kitchen companion! <br><br>
+            We help you turn ingredients into inspiration. Whether you're a beginner or a seasoned cook,
+            SmartChef recommends personalized recipes based on what you have at home. Build a community where
+            people can share and discover new recipes. <br><br>
+            Make cooking fun, interactive, and accessible to everyone. <br><br>
+            Our mission is to make home cooking simple, smart, and satisfying. Save time, reduce waste, and
+            discover new flavors every day! <br><br>
+            Join our community of food lovers and start your journey toward smarter cooking today.
+          </p>
+        </div>
+      </div>
+  </section>
+
+  <!-- Review section -->
+  <section class="review-section" id="review">
+    <div class="reviews">
+      <h2 class="reviews-heading">What Our Users Say</h2>
+      <div class="review-card">
+        <p class="review-text">"This site is super easy to use!"</p>
+        <h4 class="review-author">– Alex Johnson</h4>
+      </div>
+      <div class="review-card">
+        <p class="review-text">"I love the features and recipes."</p>
+        <h4 class="review-author">– Sarah Lee</h4>
+      </div>
+      <div class="review-card">
+        <p class="review-text">"Really convenient."</p>
+        <h4 class="review-author">– Kim Soo Ahh</h4>
+      </div>
+    </div>
+
+    <div class="review-form">
+      <h2 class="form-heading">Leave a Review</h2>
+      <form>
+        <input type="text" placeholder="Your Name" required>
+        <textarea placeholder="Write your comment..." required></textarea>
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Contact Us Section -->
+  <section class="contact" id="contactus">
+    <h1 class="heading"><span>Contact</span> Us</h1>
+    <div class="contact-container">
+      <div class="contact-info">
+        <h2>Get in Touch</h2>
+        <p>We’d love to hear from you! Reach out with any questions, feedback, or suggestions.</p>
+        <ul>
+          <li><i class="fas fa-map-marker-alt"></i> Kathmandu, Nepal</li>
+          <li><i class="fas fa-envelope"></i> smartchef@gmail.com</li>
+          <li><i class="fas fa-phone"></i> +977-9800000000</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Local JS -->
+  <script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>

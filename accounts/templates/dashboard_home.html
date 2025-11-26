@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Home Feed{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+
+     <!-- Users / Profiles Section -->
+    {% if query %}
+        <!-- <h2>Users matching "{{ query }}"</h2> -->
+        <div class="users-grid">
+            {% for user in users %}
+                <div class="user-card">
+                    <a href="{% url 'dashboard_profile' username=user.username %}">
+                        {% if user.profile.profile_image %}
+                            <img src="{{ user.profile.profile_image.url }}" alt="{{ user.username }}" style="width:80px; height:80px; border-radius:50%;">
+                        {% else %}
+                            <img src="{% static 'static/default.jpeg' %}" alt="{{ user.username }}" style="width:80px; height:80px; border-radius:50%;">
+                        {% endif %}
+                        <p>{{ user.username }}</p>
+                    </a>
+                </div>
+            {% empty %}
+                <!-- <p>No matching users found.</p> -->
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <!-- Recipes Section -->
+    <div class="recipes-grid">
+    {% for recipe in recipes %}
+        <a href="{% url 'recipe_detail' recipe.id %}" class="recipe-card">
+            <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}">
+            <h4>{{ recipe.title }}</h4>
+            <small>
+                <span>{{ recipe.user.username }}</span>
+            </small>
+        </a>
+    {% empty %}
+        <!-- no recipes -->
+    {% endfor %}
+    </div>
+
+
+   
+
+</div>
+{% endblock %}

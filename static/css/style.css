@@ -1,0 +1,506 @@
+
+*{
+    margin: 0;padding: 0;
+    box-sizing: border-box;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    outline: none;border: none;
+    text-decoration: none;
+    /* text-transform: capitalize; */
+    transition: .2s linear;
+
+}
+
+
+html{
+    font-size: 100%; 
+    scroll-behavior: smooth;
+    scroll-padding-top: 6rem;
+    overflow-x: hidden;
+}
+
+section{
+    padding: 2rem 9%;
+}
+
+
+
+
+/* HOME */
+
+
+header{
+    position: fixed;
+    top: 0;left: 0;right: 0;
+    background: #fff;
+    padding: 0.7rem 6%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 1000;
+    box-shadow: 0rem 0.5rem rgba(229, 131, 45, 0.841);
+
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem; /* space between image and text */
+}
+
+.logo-container img {
+    height: 47px;
+    width: auto;
+    object-fit: contain;
+}
+
+.logo-text {
+    font-size: 2rem;
+    color: rgb(42, 41, 41);
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+header .navbar a {
+    font-size: 1.2rem;
+    padding: 0 1.5rem;
+    color: rgb(38, 35, 35);
+    transition: all 0.3s ease;/* smooth hover effect */
+}
+
+
+header .navbar a:hover {
+    background-color: rgb(229, 131, 45); /* pink background */
+    color: white;                       /* white text */
+    border: 1px solid  rgb(229, 131, 45); /* pink border */
+    border-radius: 20px;                 /* optional: rounded corners */
+    padding: 0.45rem 1.5rem;               /* slightly increase padding for button effect */
+}
+
+
+header .icons a{
+    font-size: 1.5rem;
+    margin-left: 0.05rem;
+    color: rgb(36, 33, 33);
+}
+
+header .icons a:hover{
+    color: rgb(229, 131, 45);
+}
+
+
+header #toggler{
+    display: none;
+}
+
+header .fa-bars{
+    font-size: 1rem;
+    color: black;
+    border-radius: .1rem;
+    padding: .2rem 0.5rem;
+    cursor: pointer;
+    border: 0.1rem solid rgba(0,0,0,.3);
+    display: none;
+}
+
+
+
+
+
+
+/* HOME*/
+ .home {
+    display: flex;
+    /*justify-content: flex-end;       /* Align the content box to the right side */
+    align-items: center;             /* Center vertically */
+    min-height: 100vh;
+    background-color: #073721; 
+    /* background: url('../images/checkered.jpg') no-repeat; */
+    background-size:cover;
+    background-position: center;
+    height: 800px;
+    width: 5000px;
+    text-align: left;
+    padding-right: 0%;               /* Push content in slightly from the edge */
+    padding-left: 5%;
+    transform: translateY(-35px);
+}
+
+.home .content {
+    max-width: 45rem;
+    padding: 2rem;
+    background-color: rgba(255, 255, 255, 0.85);  /* Light background for readability */
+    border-radius: 1rem;
+}
+
+.home .content h3 {
+    font-size: 4rem;
+    font-weight: bold;
+    color: rgb(202, 109, 28);
+    margin-bottom: 1rem;
+}
+
+.home .content span {
+    display: block;
+    font-size: 2rem;
+    font-weight: bold;
+    color: rgb(3, 105, 59);  /* Pink */
+    margin-bottom: 1rem;
+}
+
+.home .content p {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    color: #666161;
+    margin-bottom: 2rem;
+}
+
+.home .content .btn {
+    display: inline-block;
+    padding: 0.8rem 1.8rem;
+    background: rgb(42, 41, 41);    /* Pink button */
+    color: #fff;
+    border-radius: 5rem;
+    font-size: 1.1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: background 0.3s;
+    text-decoration: none;
+}
+
+.home .content .btn:hover {
+    background: rgb(229, 131, 45);
+}
+
+.subb img{
+    height: 800px;
+    width: 600px;
+    transform: translateX(117px);
+}
+
+
+
+
+
+
+
+
+
+/* ABOUT */
+
+.heading{
+    text-align: center;
+    font-size: 4rem;
+    color: white;
+    padding: 0.2rem;
+    margin: 1rem 0;
+    background: rgba(8, 65, 32, 0.769);
+    max-width: 100%;
+}
+
+.heading span{
+    color: white;
+}
+
+.about .row {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+  padding: 1rem 0 3rem 0;
+}
+
+.about .row .content {
+  flex: 1 1 35rem;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #333;
+  text-align: justify;
+  max-width: 50%;
+  margin-left: auto;  /* Shifts it to the right */
+}
+
+
+.about .row .video-container {
+  flex: 1 1 40rem;
+  position: relative;
+}
+
+.about .row .video-container video {
+  width: 100%;
+  height: auto;
+  border: 0.5rem solid rgb(240, 239, 239);
+  border-radius: 2.5rem;
+  box-shadow: 0 0.5rem 1rem rgba(32, 33, 33, 0.792);
+  object-fit: cover;
+  display: block;
+}
+
+.about .row .video-container h3 {
+  position:absolute ;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.5rem;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.7);
+  padding: 1rem 2rem;
+  text-align: center;
+  mix-blend-mode: screen;
+}
+
+/* .about .row .content .btn{
+    display: inline-block;
+    padding: 0.7rem 1.5rem;
+    background: rgb(42, 41, 41);   
+    color: #fff;
+    border-radius: 5rem;
+    font-size: 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1.1px;
+    transition: background 0.3s;
+    text-decoration: none;
+}
+
+.about .row .content .btn:hover {
+    background: rgb(229, 131, 45);
+} */
+
+
+
+
+
+
+
+
+/* REVIEW */
+
+.review-section {
+  display: flex;
+  width: 82%;
+  min-height: 400px;
+  margin: 2rem auto; /* auto centers horizontally */
+  border-radius: 2.5rem;
+  box-shadow: 0 0.2rem 1rem rgba(14, 14, 14, 0.792);
+  overflow: hidden; /* ensures inner corners follow rounded edges */
+  background: white; /* makes separation clearer */
+}
+
+/* Left side (reviews) */
+.reviews {
+  width: 50%;
+  height: 400px;
+  background: #ecf0ec;
+  padding: 2rem;
+  border-right: 40px solid white ; /* separation line */
+   
+}
+
+.reviews-heading {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  color: rgb(8, 65, 32);
+}
+
+.review-card {
+  background: rgba(8, 65, 32, 0.192);
+  padding: 1rem;
+  margin: 2rem 0;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* Right side (form) */
+.review-form {
+  width: 50%;
+  background: rgba(8, 65, 32, 0.769);
+  color: white;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.form-heading {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  margin-top: -2rem;
+}
+
+.review-form form {
+  display: flex;
+  flex-direction:column;
+  gap: 1rem;
+}
+
+.review-form input,
+.review-form textarea {
+  padding: 0.8rem;
+  border-radius: 6px;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+}
+
+.review-form textarea {
+  height: 120px;
+  resize: none;
+}
+
+.review-form button {
+  background: white;
+  color: #073721;
+  padding: 0.8rem;
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.review-form button:hover {
+    background-color: rgb(219, 147, 84); /* pink background */
+    color: white;                       /* white text */
+    border: 1px solid  rgb(219, 147, 84);
+}
+
+
+
+
+
+/* CONTACT SECTION */
+.contact {
+  padding: 3rem 2rem;
+  background: #f9f9f9;
+}
+
+.contact .heading {
+    text-align: center;
+    font-size: 2rem;
+    color: white;
+    padding: 0.2rem;
+    margin: 1rem 0;
+    background: rgba(8, 65, 32, 0.769);
+    max-width: 100%;
+}
+
+.contact-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+  align-items: flex-start;
+  max-width: 1000px;
+  margin: auto;
+}
+
+.contact-info {
+  flex: 1 1 40%;
+  background: #fff;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.537);
+}
+
+.contact-info h2 {
+  color: rgb(11, 73, 37);
+  margin-bottom: 1rem;
+}
+
+.contact-info ul {
+  list-style: none;
+  padding: 0;
+}
+
+.contact-info ul li {
+  margin: 0.8rem 0;
+  font-size: 1rem;
+  color: #333;
+}
+
+.contact-info ul li i {
+  margin-right: 10px;
+  color: rgb(229, 131, 45);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media(max-width:991px){
+html{
+    font-size: 90%; 
+}
+header{
+    padding:2rem ;
+}
+selection{
+    padding:2rem ;
+}
+.home{
+    background-position: left;
+}
+}
+
+@media(max-width:768px){
+header .fa-bars{
+    display: block;
+}
+
+header .navbar{
+    position: absolute;
+    top: 100%; left: 0; right: 0;
+    background: #eee;
+    border-top: 0.1rem solid rgba(0,0,0,0.1);
+    display: none;
+    flex-direction: column;
+    align-items: flex-start;
+    clip-path: polygon(0 0,100% 0,100% 0,0 0 );
+}
+
+
+#toggler:checked ~ .navbar {
+    clip-path: polygon(0 0,100% 0,100% 100%,0 100%);
+    display: flex;
+}
+
+header .navbar a{
+    margin: 1rem;
+    padding: 1rem;
+    background: #fff;
+    border: 0.1rem solid rgba(0,0,0,0.1);
+    width: 100%;
+    display: block;
+}
+.icons {
+    display: flex;
+    align-items: center;
+  }
+.home .content h3{
+    font-size: 5rem;
+}
+
+.home .content span{
+    font-size: 2.5rem;
+}
+}
+
+
+
+@media(max-width:450px){
+html{
+    font-size: 85%; 
+}
+.heading{
+    font-size: 3rem;
+}
+}

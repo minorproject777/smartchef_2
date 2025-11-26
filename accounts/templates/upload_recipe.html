@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Upload Recipe{% endblock %}
+
+{% block content %}
+<section class="upload-section">
+    <h2>Upload New Recipe</h2>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert {% if message.tags %}{{ message.tags }}{% endif %}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <form method="POST" enctype="multipart/form-data" class="upload-form">
+        {% csrf_token %}
+        <input type="text" name="title" placeholder="Recipe Title" required>
+        <textarea name="short_description" placeholder="Short Description" required></textarea>
+        <input type="file" name="image" accept="image/*" required>
+        <button type="submit">Upload Recipe</button>
+    </form>
+
+    <script>
+        document.getElementById("uploadForm").addEventListener("submit", function() {
+        this.querySelector("button[type='submit']").disabled = true; // disable after first click
+        });
+    </script>
+</section>
+{% endblock %}
