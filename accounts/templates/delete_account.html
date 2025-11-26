@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Delete Account</h2>
+
+<form method="POST" id="delete-account-form">
+    {% csrf_token %}
+    <button type="submit" class="btn-delete">Delete My Account</button>
+</form>
+
+<script>
+(function() {
+    const form = document.getElementById('delete-account-form');
+    form.addEventListener('submit', function(event) {
+        // Show confirmation dialog
+        const confirmed = window.confirm("Are you sure you want to delete your account? This action cannot be undone!");
+        if (!confirmed) {
+            event.preventDefault(); // Stop form submission
+        }
+    });
+})();
+</script>
+
+{% endblock %}

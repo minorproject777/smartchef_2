@@ -1,5 +1,23 @@
+
+
 {% extends "base.html" %}
 {% block content %}
 <h2>Account Settings</h2>
-<p>Settings page coming soon!</p>
+
+<div class="settings-section">
+    <h3>Change Password</h3>
+    <form method="POST">
+        {% csrf_token %}
+        {{ password_form.as_p }}
+        <button type="submit">Change Password</button>
+    </form>
+</div>
+
+<div class="settings-section">
+    <h3>Delete Account</h3>
+    <form method="POST" action="{% url 'delete_account' %}">
+        {% csrf_token %}
+        <button type="submit" style="color:red;">Delete Account</button>
+    </form>
+</div>
 {% endblock %}

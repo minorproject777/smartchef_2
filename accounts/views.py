@@ -11,6 +11,8 @@ from django.db.models.signals import post_save
 from django.http import JsonResponse
 import json
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth import update_session_auth_hash
 
 # Home page
 def index(request):
@@ -322,7 +324,41 @@ def my_profile(request):
     return redirect('dashboard_profile', username=request.user.username)
 
 
+
+
 @login_required
 def settings_page(request):
-    # This can be a simple placeholder template
-    return render(request, "settings.html")
+    """
+    Renders the settings page with options to change password and delete account.
+    Handles password change form submission.
+    """
+    password_form = PasswordChangeForm(user=request.user)
+
+    if request.method == "POST":
+        password_form = PasswordChangeForm(user=request.user, data=request.POST)
+        if password_form.is_valid():
+            user = password_form.save()
+            # Update session so user doesn't get logged out
+            update_session_auth_hash(request, user)
+            return redirect("settings")
+        else:
+             return redirect("settings")
+
+    return render(request, "settings.html", {
+        "password_form": password_form,
+    })
+
+
+@login_required
+def delete_account(request):
+    """
+    Deletes the current user's account.
+    """
+    if request.method == "POST":
+        user = request.user
+        logout(request)
+        user.delete()
+        messages.success(request, "Your account has been deleted.")
+        return redirect("login")
+    return render(request, "delete_account.html")
+

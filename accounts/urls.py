@@ -29,6 +29,9 @@ urlpatterns = [
     path('dashboard/profile/', views.my_profile, name='my_profile'),
 
     path('settings/', views.settings_page, name='settings'),
+    
+    path('delete-account/', views.delete_account, name='delete_account'),
+
 
 
 
