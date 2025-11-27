@@ -1,20 +1,58 @@
 {% extends "base.html" %}
 {% block title %}{{ recipe.title }}{% endblock %}
+
 {% block content %}
+<div class="recipe-detail">
 
-    <div class="recipe-detail">
-        <a href="{% url 'recipe_detail' recipe.id %}" class="recipe-card">
-        <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}">
-        <h4>{{ recipe.title }}</h4>
-        </a>
+    <!-- Recipe Title -->
+    <h2 class="recipe-title">{{ recipe.title }}</h2>
+    <p class="recipe-author">By {{ recipe.user.username }}</p>
 
-        <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}" class="detail-img">
-        <h2>{{ recipe.title }}</h2>
+    <!-- IMAGE (optional) -->
+    {% if recipe.image %}
+        <img class="detail-img" src="{{ recipe.image.url }}" alt="{{ recipe.title }}">
+    {% endif %}
+
+    <!-- VIDEO (optional) -->
+    {% if recipe.video %}
+        <video controls class="detail-video">
+            <source src="{{ recipe.video.url }}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    {% endif %}
+
+    <!-- Recipe Info (Ingredients, Difficulty, Prep/Cook/Total Time) -->
+    <div class="recipe-info">
+        {% if recipe.ingredients %}
+        <div class="info-section">
+            <h3>Ingredients:</h3>
+            <ul>
+                {% for ingredient in recipe.ingredients.splitlines %}
+                    <li>{{ ingredient }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+        <div class="info-section">
+            {% if recipe.difficulty %}<p><strong>Difficulty:</strong> {{ recipe.difficulty }}</p>{% endif %}
+            {% if recipe.prep_time %}<p><strong>Prep Time:</strong> {{ recipe.prep_time }}</p>{% endif %}
+            {% if recipe.cook_time %}<p><strong>Cook Time:</strong> {{ recipe.cook_time }}</p>{% endif %}
+            {% if recipe.total_time %}<p><strong>Total Time:</strong> {{ recipe.total_time }}</p>{% endif %}
+        </div>
+    </div>
+
+    <!-- Description -->
+    <div class="recipe-description">
+        <h3>Description:</h3>
         <p>{{ recipe.short_description }}</p>
-        <p>By {{ recipe.user.username }}</p>
-        
-        <!-- Likes -->
-        <form method="POST" action="{% url 'like_recipe' recipe.id %}">
+    </div>
+
+    <!-- Actions: Likes / Delete -->
+    <div class="recipe-actions">
+        {% if user != recipe.user %}
+        <!-- Like Button -->
+        <form method="POST" action="{% url 'like_recipe' recipe.id %}" class="like-form">
             {% csrf_token %}
             <button type="submit">
                 {% if user in recipe.likes.all %}
@@ -25,8 +63,18 @@
                 ({{ recipe.total_likes }})
             </button>
         </form>
+        {% else %}
+        <!-- Owner Delete Button -->
+        <form method="POST" action="{% url 'delete_recipe' recipe.id %}" onsubmit="return confirm('Are you sure you want to delete this recipe?');">
+            {% csrf_token %}
+            <button type="submit" class="btn-delete">Delete Recipe</button>
+        </form>
+        {% endif %}
+    </div>
 
-        <!-- Comments -->
+    <!-- Comments Section -->
+    {% if user != recipe.user %}
+    <div class="comments-section">
         <h3>Comments</h3>
         <div class="comments">
             {% for comment in recipe.comments.all %}
@@ -42,6 +90,7 @@
             <button type="submit">Post</button>
         </form>
     </div>
+    {% endif %}
 
-
+</div>
 {% endblock %}

@@ -29,12 +29,19 @@ def create_or_update_user_profile(sender, instance, created, **kwargs):
     instance.profile.save()
 
 
-# Recipe model
 class Recipe(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='recipes')
     title = models.CharField(max_length=200)
     short_description = models.TextField()
-    image = models.ImageField(upload_to='recipes/')
+    image = models.ImageField(upload_to='recipes/', blank=True, null=True)
+    video = models.FileField(upload_to='recipes/videos/', blank=True, null=True)
+
+    ingredients = models.TextField(blank=True, null=True)
+    difficulty = models.CharField(max_length=50, blank=True, null=True)
+    cuisine = models.CharField(max_length=50, blank=True, null=True)
+    prep_time = models.CharField(max_length=20, blank=True, null=True)
+    cook_time = models.CharField(max_length=20, blank=True, null=True)
+
     created_at = models.DateTimeField(auto_now_add=True)
     likes = models.ManyToManyField(User, related_name='liked_recipes', blank=True)
 
@@ -45,7 +52,8 @@ class Recipe(models.Model):
         return self.likes.count()
 
     class Meta:
-        unique_together = ('user', 'title')  # <- ensures no duplicate titles per user
+        unique_together = ('user', 'title')
+
 
 # Comment model
 class Comment(models.Model):
@@ -60,12 +68,17 @@ class Comment(models.Model):
 
 
 
-# ===== Recipe Image Auto-Delete =====
+# ===== Recipe Image & Video Auto-Delete =====
 @receiver(post_delete, sender=Recipe)
-def delete_recipe_image(sender, instance, **kwargs):
-    if instance.image:
-        if os.path.isfile(instance.image.path):
-            os.remove(instance.image.path)
+def delete_recipe_files(sender, instance, **kwargs):
+    # Delete image file
+    if instance.image and os.path.isfile(instance.image.path):
+        os.remove(instance.image.path)
+
+    # Delete video file
+    if instance.video and os.path.isfile(instance.video.path):
+        os.remove(instance.video.path)
+
 
 # ===== Profile Image Auto-Delete =====
 @receiver(post_delete, sender=Profile)

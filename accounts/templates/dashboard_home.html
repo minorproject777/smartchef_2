@@ -30,7 +30,12 @@
     <div class="recipes-grid">
     {% for recipe in recipes %}
         <a href="{% url 'recipe_detail' recipe.id %}" class="recipe-card">
-            <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}">
+            {% if recipe.image %}
+             <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}">
+            {% else %}
+                <img src="{% static 'images/default_recipe.jpg' %}" alt="No Image">
+            {% endif %}
+
             <h4>{{ recipe.title }}</h4>
             <small>
                 <span>{{ recipe.user.username }}</span>

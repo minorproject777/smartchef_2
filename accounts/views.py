@@ -126,32 +126,42 @@ def upload_recipe(request):
     if request.method == "POST":
         title = request.POST.get("title")
         short_description = request.POST.get("short_description")
+
+        ingredients = request.POST.get("ingredients")
+        difficulty = request.POST.get("difficulty")
+        cuisine = request.POST.get("cuisine")
+        prep_time = request.POST.get("prep_time")
+        cook_time = request.POST.get("cook_time")
+
         image = request.FILES.get("image")
+        video = request.FILES.get("video")
 
-        # Validate all fields
-        if not title or not short_description or not image:
+        # Must have at least image or video
+        if not image and not video:
+            messages.error(request, "Please upload an image or a video.")
             return redirect("upload_recipe")
 
-        # Check for duplicates by the same user
+        # Duplicate title check for same user
         if Recipe.objects.filter(user=request.user, title=title).exists():
-
+            messages.error(request, "You already have a recipe with this title.")
             return redirect("upload_recipe")
 
-        # ✅ Create the recipe only once
         Recipe.objects.create(
             user=request.user,
             title=title,
             short_description=short_description,
-            image=image
+            ingredients=ingredients,
+            difficulty=difficulty,
+            cuisine=cuisine,
+            prep_time=prep_time,
+            cook_time=cook_time,
+            image=image,
+            video=video
         )
 
-        """ messages.success(request, "Recipe uploaded successfully!") """
-        # After successful upload
         return redirect('dashboard_profile', username=request.user.username)
 
-
     return render(request, "upload_recipe.html")
-
 
 
 # Edit Profile
@@ -216,19 +226,21 @@ def like_recipe(request, recipe_id):
 
 @login_required
 def delete_recipe(request, recipe_id):
-    # Only allow the owner to delete
     recipe = get_object_or_404(Recipe, id=recipe_id, user=request.user)
 
-    # Delete the image file (auto-delete signal also works)
+    # Delete uploaded image
     if recipe.image:
         recipe.image.delete(save=False)
 
-    # Delete recipe from database
+    # Delete uploaded video
+    if recipe.video:
+        recipe.video.delete(save=False)
+
+    # Delete recipe record
     recipe.delete()
 
-    # Redirect back to profile
-   # After successful upload
     return redirect('dashboard_profile', username=request.user.username)
+
 
 
 
