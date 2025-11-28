@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from .models import Recipe, Comment, Profile, Follow
+from .models import Recipe, Comment, Profile, Follow,Reply
 from django.db.models import Q
 from django.dispatch import receiver
 from django.db.models.signals import post_save
@@ -373,4 +373,49 @@ def delete_account(request):
         messages.success(request, "Your account has been deleted.")
         return redirect("login")
     return render(request, "delete_account.html")
+
+
+
+
+@login_required
+def add_reply(request, recipe_id, comment_id):
+    comment = get_object_or_404(Comment, id=comment_id)
+
+    if request.method == "POST":
+        reply_text = request.POST.get("reply")
+
+        Reply.objects.create(
+            comment=comment,
+            user=request.user,
+            content=reply_text
+        )
+
+    return redirect("recipe_detail", recipe_id=recipe_id)
+
+
+@login_required
+def delete_comment(request, recipe_id, comment_id):
+    comment = get_object_or_404(Comment, id=comment_id)
+    recipe = comment.recipe
+
+    # Only recipe owner OR comment owner can delete
+    if request.user == comment.user or request.user == recipe.user:
+        comment.delete()
+
+    return redirect("recipe_detail", recipe_id=recipe_id)
+
+
+
+@login_required
+def delete_reply(request, recipe_id, reply_id):
+    reply = get_object_or_404(Reply, id=reply_id)
+    comment = reply.comment
+    recipe = comment.recipe
+
+    # Only reply owner OR recipe owner can delete
+    if request.user == reply.user or request.user == recipe.user:
+        reply.delete()
+
+    return redirect("recipe_detail", recipe_id=recipe_id)
+
 

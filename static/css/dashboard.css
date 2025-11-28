@@ -508,6 +508,34 @@ form button:hover {
 
 
 
+.comment-block {
+    background: #fafafa;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.reply {
+    margin-left: 30px;
+    background: #f0f0f0;
+    padding: 8px;
+    border-radius: 6px;
+    margin-top: 5px;
+}
+
+.delete-btn {
+    color: red;
+    margin-left: 10px;
+    font-size: 0.9rem;
+}
+
+.reply-toggle {
+    color: #CA6D1C;
+    font-size: 0.9rem;
+}
+
+
+
 
 
 

@@ -67,6 +67,18 @@ class Comment(models.Model):
 
 
 
+class Reply(models.Model):
+    comment = models.ForeignKey(Comment, on_delete=models.CASCADE, related_name="replies")
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Reply by {self.user.username}"
+
+
+
+
 
 # ===== Recipe Image & Video Auto-Delete =====
 @receiver(post_delete, sender=Recipe)
