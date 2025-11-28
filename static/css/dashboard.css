@@ -381,7 +381,7 @@ form button:hover {
 
 /* ===== Recipe Detail ===== */
 .recipe-detail {
-    max-width: 800px;
+    max-width: 1100px;
     margin: 2rem auto;
     background: #fff;
     padding: 2rem;
@@ -392,56 +392,88 @@ form button:hover {
     gap: 1.5rem;
 }
 
+/* Title & author */
 .recipe-title {
-    font-size: 2rem;
+    font-size: 2.5rem;
     font-weight: bold;
-    margin-bottom: 0.2rem;
+    text-align: center;
 }
 
 .recipe-author {
-    font-size: 0.9rem;
+    font-size: 1rem;
     color: #555;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+/* Media: Image & Video Side by Side */
+.media-section {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 .detail-img, .detail-video {
-    width: 100%;
+    width: 48%;
     border-radius: 1rem;
-    margin-top: 1rem;
-}
-
-.detail-video {
-    max-height: 450px;
     object-fit: cover;
 }
 
-.recipe-info {
+.detail-video {
+    max-height: 400px;
+}
+
+/* Info and Ingredients Side by Side */
+.info-ingredients {
     display: flex;
-    flex-direction: column;
-    gap: 1rem;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+/* Info Box */
+.recipe-info {
+    flex: 1;
     background: #f9f9f9;
     padding: 1rem;
     border-radius: 0.8rem;
 }
 
-.recipe-info .info-section p, .recipe-info .info-section ul {
-    margin: 0.2rem 0;
+.recipe-info p {
+    margin: 0.3rem 0;
 }
 
-.recipe-info ul {
+/* Ingredients Box */
+.ingredients-section {
+    flex: 1;
+    background: #f9f9f9;
+    padding: 1rem;
+    border-radius: 0.8rem;
+}
+
+.ingredients-section ul {
     list-style-type: disc;
     padding-left: 1.5rem;
 }
 
+/* Instructions Section */
 .recipe-description {
     background: #f4f4f4;
     padding: 1rem;
     border-radius: 0.8rem;
 }
 
+.recipe-description ul {
+    list-style-type: decimal;
+    padding-left: 1.5rem;
+}
+
+/* Actions Section: Likes / Delete */
 .recipe-actions {
     display: flex;
     gap: 1rem;
     align-items: center;
+    flex-wrap: wrap;
 }
 
 .recipe-actions button {
@@ -470,6 +502,7 @@ form button:hover {
     background: #e5832d;
 }
 
+/* Comments Section */
 .comments-section {
     display: flex;
     flex-direction: column;
@@ -506,15 +539,7 @@ form button:hover {
     background: #e5832d;
 }
 
-
-
-.comment-block {
-    background: #fafafa;
-    padding: 12px;
-    border-radius: 8px;
-    margin-bottom: 10px;
-}
-
+/* Replies */
 .reply {
     margin-left: 30px;
     background: #f0f0f0;
@@ -532,7 +557,9 @@ form button:hover {
 .reply-toggle {
     color: #CA6D1C;
     font-size: 0.9rem;
+    cursor: pointer;
 }
+
 
 
 
