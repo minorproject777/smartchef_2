@@ -4,85 +4,101 @@
 {% block content %}
 <div class="recipe-detail">
 
-    <!-- Recipe Title -->
+    <!-- Title & Author -->
     <h2 class="recipe-title">{{ recipe.title }}</h2>
     <p class="recipe-author">By {{ recipe.user.username }}</p>
 
-    <!-- IMAGE (optional) -->
+    <!-- Media Section -->
+<div class="media-section">
     {% if recipe.image %}
-        <img class="detail-img" src="{{ recipe.image.url }}" alt="{{ recipe.title }}">
+    <div class="media-box">
+        <img src="{{ recipe.image.url }}" class="detail-img" alt="{{ recipe.title }}">
+    </div>
     {% endif %}
 
-    <!-- VIDEO (optional) -->
     {% if recipe.video %}
+    <div class="media-box">
         <video controls class="detail-video">
             <source src="{{ recipe.video.url }}" type="video/mp4">
-            Your browser does not support the video tag.
         </video>
-    {% endif %}
-
-    <!-- Recipe Info (Ingredients, Difficulty, Prep/Cook/Total Time) -->
-    <div class="recipe-info">
-        {% if recipe.ingredients %}
-        <div class="info-section">
-            <h3>Ingredients:</h3>
-            <ul>
-                {% for ingredient in recipe.ingredients.splitlines %}
-                    <li>{{ ingredient }}</li>
-                {% endfor %}
-            </ul>
-        </div>
-        {% endif %}
-
-        <div class="info-section">
-            {% if recipe.difficulty %}<p><strong>Difficulty:</strong> {{ recipe.difficulty }}</p>{% endif %}
-            {% if recipe.prep_time %}<p><strong>Prep Time:</strong> {{ recipe.prep_time }}</p>{% endif %}
-            {% if recipe.cook_time %}<p><strong>Cook Time:</strong> {{ recipe.cook_time }}</p>{% endif %}
-            {% if recipe.total_time %}<p><strong>Total Time:</strong> {{ recipe.total_time }}</p>{% endif %}
-        </div>
     </div>
-
-    <!-- Description -->
-    <div class="recipe-description">
-    <h3>Instructions:</h3>
-    <ul>
-        {% for instruction in recipe.short_description.splitlines %}
-            <li>{{ instruction }}</li>
-        {% endfor %}
-    </ul>
-    </div>
-
-
-    <!-- Actions: Likes / Delete -->
-<div class="recipe-actions">
-
-    <!-- Like Button (everyone including owner can like/unlike if you want) -->
-    <form method="POST" action="{% url 'like_recipe' recipe.id %}" class="like-form">
-        {% csrf_token %}
-        <button type="submit">
-            {% if user in recipe.likes.all %}
-                ❤️ Unlike
-            {% else %}
-                🤍 Like
-            {% endif %}
-            ({{ recipe.total_likes }})
-        </button>
-    </form>
-
-    <!-- Delete button only for owner -->
-    {% if user == recipe.user %}
-    <form method="POST" action="{% url 'delete_recipe' recipe.id %}" 
-          onsubmit="return confirm('Are you sure you want to delete this recipe?');">
-        {% csrf_token %}
-        <button type="submit" class="btn-delete">Delete Recipe</button>
-    </form>
     {% endif %}
-
 </div>
 
-<!-- Comments Section (visible to everyone) -->
-<!-- Comments Section (visible to everyone) -->
-<div class="comments-section">
+<!-- Info & Ingredients Section -->
+<div class="info-ingredients">
+
+    <div class="info-box">
+    {% if recipe.difficulty %}
+        <p><span class="info-label">Difficulty :</span> <span class="info-value">{{ recipe.difficulty }}</span></p>
+    {% endif %}
+
+    {% if recipe.cuisine %}
+        <p><span class="info-label">Cuisine :</span> <span class="info-value">{{ recipe.cuisine }}</span></p>
+    {% endif %}
+
+    {% if recipe.prep_time %}
+        <p><span class="info-label">Prep Time :</span> <span class="info-value">{{ recipe.prep_time }}</span></p>
+    {% endif %}
+
+    {% if recipe.cook_time %}
+        <p><span class="info-label">Cook Time :</span> <span class="info-value">{{ recipe.cook_time }}</span></p>
+    {% endif %}
+    </div>
+
+
+    <div class="ingredients-box">
+        {% if recipe.ingredients %}
+        <h3>Ingredients:</h3>
+        <ul>
+            {% for ingredient in recipe.ingredients.splitlines %}
+            <li>{{ ingredient }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+    </div>
+
+
+    <!-- Instructions -->
+    {% if recipe.short_description %}
+    <div class="recipe-description">
+        <h3>Instructions:</h3>
+        <ul>
+            {% for step in recipe.short_description.splitlines %}
+                <li>{{ step }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+
+    <!-- Likes / Delete -->
+    <div class="recipe-actions">
+            <form method="POST" action="{% url 'like_recipe' recipe.id %}" class="like-form">
+                {% csrf_token %}
+                <button type="submit">
+                    {% if user in recipe.likes.all %}❤️{% else %}🤍{% endif %}
+                    {{ recipe.total_likes }}
+                </button>
+            </form> 
+            <div class="delete-actions">
+            {% if user == recipe.user %}
+            <form method="POST" action="{% url 'delete_recipe' recipe.id %}" 
+                onsubmit="return confirm('Are you sure you want to delete this recipe?');">
+                {% csrf_token %}
+                <button type="submit" class="btn-delete-in">
+                    <i class="far fa-trash-alt"></i> 
+                </button>
+            </form>
+            {% endif %}   
+            </div>
+    </div>
+
+    
+
+    <!-- Comments Section -->
+    <!-- Comments Section (visible to everyone) -->
+    <div class="comments-section">
     <h3>Comments</h3>
 
     <div class="comments">
@@ -91,25 +107,32 @@
 
             <!-- Comment content -->
             <p>
-                <strong>{{ comment.user.username }}:</strong>
+                <br><strong>{{ comment.user.username }}</strong></br>
                 {{ comment.content }}
+                <br></br>
 
+                <!-- Reply button -->
+                    <a href="#" class="reply-toggle"
+                    onclick="document.getElementById('reply-{{ comment.id }}').style.display='block'; return false;">
+                        <button type="submit">
+                                    <i class="fa-solid fa-reply"></i> 
+                        </button>
+                    </a>
                 <!-- Delete comment (allowed for comment owner OR recipe owner) -->
                 {% if user == comment.user or user == recipe.user %}
                     <a class="delete-btn"
                        href="{% url 'delete_comment' recipe.id comment.id %}"
                        onclick="return confirm('Delete this comment?');">
-                        Delete
+                        <button type="submit">
+                            <i class="far fa-trash-alt"></i> 
+                        </button>
                     </a>
                 {% endif %}
+
+                
             </p>
 
-            <!-- Reply button -->
-            <a href="#" class="reply-toggle"
-               onclick="document.getElementById('reply-{{ comment.id }}').style.display='block'; return false;">
-                Reply
-            </a>
-
+            
             <!-- Reply form -->
             <form id="reply-{{ comment.id }}" method="POST"
                   action="{% url 'add_reply' recipe.id comment.id %}"
@@ -122,15 +145,18 @@
             <!-- Show replies -->
             {% for reply in comment.replies.all %}
                 <div class="reply">
-                    <strong>{{ reply.user.username }} (reply):</strong>
+                    <strong>{{ reply.user.username }} : </strong>
                     {{ reply.content }}
-
+                    <br></br>
                     <!-- Delete reply (reply owner OR recipe owner) -->
                     {% if user == reply.user or user == recipe.user %}
                         <a class="delete-btn"
                            href="{% url 'delete_reply' recipe.id reply.id %}"
                            onclick="return confirm('Delete this reply?');">
-                            Delete
+                            <button type="submit">
+                                <i class="far fa-trash-alt"></i> 
+                            </button>
+
                         </a>
                     {% endif %}
                 </div>
@@ -149,7 +175,11 @@
         <button type="submit">Post</button>
     </form>
 
+    </div>
+
+
 </div>
+
 
 {% endblock %}
 
