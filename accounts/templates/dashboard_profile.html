@@ -64,16 +64,20 @@
 
 
                 <h4>{{ recipe.title }}</h4>
+                {% if request.user == recipe.user %}
+                    <a href="{% url 'delete_recipe' recipe.id %}" 
+                    onclick="return confirm('Delete this recipe?');"
+                    class="btn-delete">
+                    <i class="far fa-trash-alt"></i>
+                    </a>
+                {% endif %}
+                <div class="likes2">
+                    <span>❤️{{ recipe.total_likes }}</span>
+                </div>
             </a>
 
 
-            {% if request.user == recipe.user %}
-                <a href="{% url 'delete_recipe' recipe.id %}" 
-                   onclick="return confirm('Delete this recipe?');"
-                   class="btn-delete">
-                   <i class="far fa-trash-alt"></i>
-                </a>
-            {% endif %}
+            
 
         </div>
     {% endfor %}
