@@ -6,8 +6,9 @@
 
     <!-- Title & Author -->
     <h2 class="recipe-title">{{ recipe.title }}</h2>
-    <p class="recipe-author">By {{ recipe.user.username }}</p>
-
+    <a href="{% url 'dashboard_profile' recipe.user.username %}">
+            <p class="recipe-author">By {{ recipe.user.username }}</p>
+    </a>
     <!-- Media Section -->
 <div class="media-section">
     {% if recipe.image %}
@@ -74,13 +75,13 @@
 
     <!-- Likes / Delete -->
     <div class="recipe-actions">
-            <form method="POST" action="{% url 'like_recipe' recipe.id %}" class="like-form">
-                {% csrf_token %}
-                <button type="submit">
-                    {% if user in recipe.likes.all %}❤️{% else %}🤍{% endif %}
-                    {{ recipe.total_likes }}
-                </button>
-            </form> 
+            <form method="POST" action="{% url 'like_recipe' recipe.id %}" class="like-form"> 
+                {% csrf_token %} 
+                <button type="submit"> 
+                    {% if user in recipe.likes.all %}❤️{% else %}🤍{% endif %} {{ recipe.total_likes }} 
+                </button> 
+            </form>
+ 
             <div class="delete-actions">
             {% if user == recipe.user %}
             <form method="POST" action="{% url 'delete_recipe' recipe.id %}" 
@@ -177,8 +178,10 @@
 
     </div>
 
-
 </div>
+
+
+
 
 
 {% endblock %}

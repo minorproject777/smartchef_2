@@ -9,8 +9,6 @@
         <!-- Profile picture with static fallback -->
         {% if profile.profile_image %}
             <img src="{{ profile.profile_image.url }}" alt="{{ profile.user.username }}" class="profile-pic">
-        {% else %}
-            <img src="{% static 'images/default.jpeg' %}" alt="Default Profile" class="profile-pic">
         {% endif %}
 
 

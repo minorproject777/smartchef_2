@@ -413,6 +413,10 @@ ul li {
     margin-bottom: 1rem;
 }
 
+.recipe-author:hover {
+    color: rgb(10, 86, 42);
+}
+
 /* Media Section: Image & Video side by side */
 .media-section {
     display: flex;
@@ -743,6 +747,7 @@ textarea:focus {
 
 }
 
+
 .upload-form button {
     padding: 0.8rem;
     border: none;
@@ -758,6 +763,46 @@ textarea:focus {
 .upload-form button:hover {
     background-color: #e5832d;
 }
+
+.difficulty-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.difficulty-buttons .btn {
+    padding: 5px 15px;
+    border-radius: 8px;
+    background: #eee;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.difficulty-buttons input[type="radio"] {
+    display: none;
+}
+
+.difficulty-buttons input[type="radio"]:checked + span,
+.difficulty-buttons .btn:has(input:checked) {
+    background: #CA6D1C;
+    color: white;
+}
+
+.difficulty-buttons .btn:hover {
+    background: #CA6D1C;
+    color: white;
+}
+
+
+
+
+
+
+
+
+
+
+
 
 
 

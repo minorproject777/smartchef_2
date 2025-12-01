@@ -33,7 +33,9 @@ class Recipe(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='recipes')
     title = models.CharField(max_length=200)
     short_description = models.TextField()
-    image = models.ImageField(upload_to='recipes/', blank=True, null=True)
+    image = models.ImageField(upload_to='recipes/',
+                             blank=True, 
+                             null=True,)
     video = models.FileField(upload_to='recipes/videos/', blank=True, null=True)
 
     ingredients = models.TextField(blank=True, null=True)

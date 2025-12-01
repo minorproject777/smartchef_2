@@ -14,8 +14,6 @@
                     <a href="{% url 'dashboard_profile' username=user.username %}">
                         {% if user.profile.profile_image %}
                             <img src="{{ user.profile.profile_image.url }}" alt="{{ user.username }}" style="width:80px; height:80px; border-radius:50%;">
-                        {% else %}
-                            <img src="{% static 'static/default.jpeg' %}" alt="{{ user.username }}" style="width:80px; height:80px; border-radius:50%;">
                         {% endif %}
                         <p>{{ user.username }}</p>
                     </a>
