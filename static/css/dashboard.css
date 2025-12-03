@@ -246,6 +246,7 @@ button {
     font-size: 1.2rem;
     transition: all 0.3s ease;
     position: relative;
+    margin-top: 0.5rem;
 }
 
 /* Hover effect */
@@ -273,18 +274,61 @@ button {
 }
 
 /* Optional: Follow/Unfollow buttons styling */
+.profile-actions a.btn-follow:hover {
+    background-color: #e5832d;
+}
+.profile-actions a.btn-unfollow:hover {
+    background-color: #e5832d;
+}
+
 .profile-actions a.btn-follow {
     width: auto;
     padding: 0.5rem 1rem;
     border-radius: 2rem;
-    background-color: #4080ff; /* blue follow */
+    background-color: #CA6D1C; /* blue follow */
     color: #fff;
     font-weight: bold;
+    font-size: 15px;
+    transition: all 0.3s ease;
+    margin-top: 1.5rem;
+    margin-bottom: 0.7rem;
+}
+.profile-actions a.btn-unfollow {
+    width: auto;
+    padding: 0.5rem 1rem;
+    border-radius: 2rem;
+    background-color: #CA6D1C; /* blue follow */
+    color: #fff;
+    font-weight: bold;
+    font-size: 15px;
+    transition: all 0.3s ease;
+    margin-top: 1.5rem;
+    margin-bottom: 0.7rem;
 }
 
-.profile-actions a.btn-follow:hover {
-    background-color: #2a5dc7;
+.profile-actions .own-total-likes{
+    font-size: 15px;
+    color: rgb(10, 86, 42);
+    font-weight: bold;
+    margin-top: 2rem;
+    margin-left: 30rem;
 }
+
+.profile-actions .total-likes{
+    font-size: 15px;
+    color: rgb(10, 86, 42);
+    font-weight: bold;
+    margin-top: 2rem;
+    margin-left: 33rem;
+}
+
+
+
+
+
+
+
+
 
 
 
@@ -657,7 +701,7 @@ ul li {
 }
 .btn-delete-in:hover {
     background: #ffffff;
-    color: rgb(206, 0, 0);
+    color: #e5832d;
 }
 
 
@@ -668,6 +712,17 @@ ul li {
     gap: 1rem;
 }
 
+.comments-section .likes-link {
+    font-size: 0.9rem;
+    margin-top: -1.2rem;
+    margin-bottom: 1rem;
+    color: #333;
+    
+}
+.comments-section .likes-link:hover {
+    color: #e5832d;
+    
+}
 .comments-section .comments {
     background: #f4f4f4;
     padding: 1rem;
@@ -716,7 +771,7 @@ ul li {
     cursor: pointer;
 }
 
-.delete-btn button {
+.delete-btn-comment button {
     color: rgba(0, 0, 0, 0.64);
     margin-left: 10px;
     font-size: 0.9rem;
@@ -1223,7 +1278,18 @@ textarea:focus {
     background: #e5832d;
 }
 
-.delete-btn, .delete-confirm-btn {
+.delete-btn {
+    display: inline-block;
+    padding: 10px 16px;
+    background: #CA6D1C;
+    color: white;
+    border-radius: 6px;
+    text-decoration: none;
+    margin-top: 10px;
+    font-size: 14px;
+    margin-left: 10rem;
+}
+.delete-confirm-btn {
     display: inline-block;
     padding: 10px 16px;
     background: #CA6D1C;
@@ -1234,6 +1300,7 @@ textarea:focus {
     font-size: 14px;
     margin-left: 8.5rem;
 }
+
 
 .delete-btn:hover, .delete-confirm-btn:hover {
     background: #e5832d;

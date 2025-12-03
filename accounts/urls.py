@@ -37,6 +37,8 @@ urlpatterns = [
     path("recipe/<int:recipe_id>/reply/<int:comment_id>/", views.add_reply, name="add_reply"),
     path("recipe/<int:recipe_id>/comment/<int:comment_id>/delete/", views.delete_comment, name="delete_comment"),
     path("recipe/<int:recipe_id>/reply/<int:reply_id>/delete/", views.delete_reply, name="delete_reply"),
+    path('recipe/<int:recipe_id>/likes/', views.recipe_likes_list, name='recipe_likes_list'),
+
 
    
 

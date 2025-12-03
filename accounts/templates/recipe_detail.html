@@ -91,8 +91,10 @@
                     <i class="far fa-trash-alt"></i> 
                 </button>
             </form>
+
             {% endif %}   
             </div>
+
     </div>
 
     
@@ -100,6 +102,12 @@
     <!-- Comments Section -->
     <!-- Comments Section (visible to everyone) -->
     <div class="comments-section">
+
+     {% if user == recipe.user %}
+                <a href="{% url 'recipe_likes_list' recipe.id %}" class="likes-link">
+                    Who liked this recipe?
+                </a>
+            {% endif %}
     <h3>Comments</h3>
 
     <div class="comments">
@@ -121,7 +129,7 @@
                     </a>
                 <!-- Delete comment (allowed for comment owner OR recipe owner) -->
                 {% if user == comment.user or user == recipe.user %}
-                    <a class="delete-btn"
+                    <a class="delete-btn-comment"
                        href="{% url 'delete_comment' recipe.id comment.id %}"
                        onclick="return confirm('Delete this comment?');">
                         <button type="submit">
@@ -151,7 +159,7 @@
                     <br></br>
                     <!-- Delete reply (reply owner OR recipe owner) -->
                     {% if user == reply.user or user == recipe.user %}
-                        <a class="delete-btn"
+                        <a class="delete-btn-comment"
                            href="{% url 'delete_reply' recipe.id reply.id %}"
                            onclick="return confirm('Delete this reply?');">
                             <button type="submit">

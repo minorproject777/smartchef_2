@@ -42,13 +42,22 @@
                     <a href="{% url 'edit_profile' %}" class="btn" title="Edit Profile">
                         <i class="fas fa-user-edit"></i>
                     </a>
+                    <div class ="own-total-likes"> 
+                        <p>Likes : {{ total_likes }}</p>
+                    </div>
                 {% else %}
                     {% if is_following %}
-                        <a href="{% url 'unfollow_user' user.id %}" class="btn">Unfollow</a>
+                        <a href="{% url 'unfollow_user' user.id %}" class="btn-unfollow">Unfollow</a>
                     {% else %}
-                        <a href="{% url 'follow_user' user.id %}" class="btn">Follow</a>
+                        <a href="{% url 'follow_user' user.id %}" class="btn-follow">Follow</a>
                     {% endif %}
+                    <div class ="total-likes"> 
+                        <p>Likes : {{ total_likes }}</p>
+                        
+                    </div>
                 {% endif %}
+
+                
             </div>
         </div>
     </div>

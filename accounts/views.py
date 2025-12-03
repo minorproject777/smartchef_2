@@ -13,6 +13,8 @@ import json
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
+from django.db.models import Count
+
 
 # Home page
 def index(request):
@@ -76,12 +78,15 @@ def dashboard_profile(request, username):
     
     # Check if current user is following this user
     is_following = request.user.following.filter(following=user).exists()
+     # Corrected line
+    total_likes = user_recipes.aggregate(total_likes=Count('likes'))['total_likes'] or 0
 
     return render(request, 'dashboard_profile.html', {
         'user': user,
         'profile': profile,
         'user_recipes': user_recipes,
-        'is_following': is_following
+        'is_following': is_following,
+        "total_likes": total_likes
     })
      
 
@@ -425,5 +430,26 @@ def delete_reply(request, recipe_id, reply_id):
         reply.delete()
 
     return redirect("recipe_detail", recipe_id=recipe_id)
+
+
+
+
+
+from django.shortcuts import render, get_object_or_404
+from django.contrib.auth.decorators import login_required
+from .models import Recipe  # adjust path if needed
+
+
+@login_required
+def recipe_likes_list(request, recipe_id):
+    recipe = get_object_or_404(Recipe, id=recipe_id)
+
+
+    liked_users = recipe.likes.all()  # assuming ManyToMany field named 'likes'
+
+    return render(request, "likes.html", {
+        "recipe": recipe,
+        "liked_users": liked_users
+    })
 
 

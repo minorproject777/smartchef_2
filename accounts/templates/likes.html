@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2>People who liked: {{ recipe.title }}</h2>
+
+{% if liked_users %}
+    <ul class="likes-list">
+        {% for user in liked_users %}
+            <li>
+                <img src="{{ user.profile.profile_image.url }}" class="profile-small">
+                {{ user.username }}
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No likes yet.</p>
+{% endif %}
+
+<a href="{% url 'recipe_detail' recipe.id %}" class="back-btn">← Back to Recipe</a>
+
+{% endblock %}
