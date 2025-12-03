@@ -1,23 +1,45 @@
-
-
 {% extends "base.html" %}
+{% load static %}
+
 {% block content %}
-<h2>Account Settings</h2>
+<div class="settings-container">
 
-<div class="settings-section">
-    <h3>Change Password</h3>
-    <form method="POST">
-        {% csrf_token %}
-        {{ password_form.as_p }}
-        <button type="submit">Change Password</button>
-    </form>
+    <h2 class="settings-title">Account Settings</h2>
+
+    <!-- CHANGE PASSWORD SECTION -->
+    <div class="settings-box">
+        <button class="toggle-btn" onclick="toggleSection('password-section')">
+            Change Password ▼
+        </button>
+
+        <div id="password-section" class="settings-content hidden">
+            <form method="POST" class="form-block">
+                {% csrf_token %}
+                {{ password_form.as_p }}
+                <button type="submit" class="submit-btn">Update Password</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- DELETE ACCOUNT SECTION -->
+    <div class="settings-box">
+        <button class="toggle-btn" onclick="toggleSection('delete-section')">
+            Delete Account ▼
+        </button>
+
+        <div id="delete-section" class="settings-content hidden">
+            <a href="{% url 'delete_confirm' %}" class="delete-btn">Proceed to Delete Account</a>
+        </div>
+    </div>
+
 </div>
 
-<div class="settings-section">
-    <h3>Delete Account</h3>
-    <form method="POST" action="{% url 'delete_account' %}">
-        {% csrf_token %}
-        <button type="submit" style="color:red;">Delete Account</button>
-    </form>
-</div>
+<!-- JS FOR DROPDOWN -->
+<script>
+function toggleSection(id) {
+    const section = document.getElementById(id);
+    section.classList.toggle("hidden");
+}
+</script>
+
 {% endblock %}

@@ -71,7 +71,7 @@ def dashboard_profile(request, username):
         messages.error(request, "User not found.")
         return redirect('dashboard_home')
     
-    profile = getattr(user, 'profile', None)  # assuming you have a Profile model
+    profile = getattr(user, 'profile', None)  
     user_recipes = Recipe.objects.filter(user=user).order_by('-created_at')
     
     # Check if current user is following this user
@@ -158,8 +158,9 @@ def upload_recipe(request):
             image=image,
             video=video
         )
-
+        messages.success(request, "Recipe uploaded successfully.")
         return redirect('dashboard_profile', username=request.user.username)
+        
 
     return render(request, "upload_recipe.html")
 
@@ -185,6 +186,7 @@ def edit_profile(request):
         user.username = new_username
         user.email = new_email
         user.save()
+        messages.success(request, "Profile updated successfully.")
 
         profile.full_name = request.POST.get('full_name')
         profile.bio = request.POST.get('bio')
@@ -219,8 +221,10 @@ def like_recipe(request, recipe_id):
     recipe = get_object_or_404(Recipe, id=recipe_id)
     if request.user in recipe.likes.all():
         recipe.likes.remove(request.user)
+        messages.success(request, "You unliked the recipe.")
     else:
         recipe.likes.add(request.user)
+        messages.success(request, "You liked the recipe.")
     return redirect(request.META.get('HTTP_REFERER', 'dashboard_home'))
 
 
@@ -238,6 +242,7 @@ def delete_recipe(request, recipe_id):
 
     # Delete recipe record
     recipe.delete()
+    messages.success(request, "Recipe deleted successfully.")
 
     return redirect('dashboard_profile', username=request.user.username)
 
@@ -337,20 +342,25 @@ def my_profile(request):
 
 
 
-
 @login_required
 def settings_page(request):
+    """
+    Page shows password dropdown + delete account option.
+    """
     password_form = PasswordChangeForm(user=request.user)
 
     if request.method == "POST":
+        # Only password change happens here
         password_form = PasswordChangeForm(user=request.user, data=request.POST)
+        
         if password_form.is_valid():
             user = password_form.save()
-            # Update session so user doesn't get logged out
-            update_session_auth_hash(request, user)
+            update_session_auth_hash(request, user)   # Keep user logged in
+            messages.success(request, "Password changed successfully.")
             return redirect("settings")
         else:
-             return redirect("settings")
+            messages.error(request, "Invalid password details.")
+            return redirect("settings")
 
     return render(request, "settings.html", {
         "password_form": password_form,
@@ -359,7 +369,18 @@ def settings_page(request):
 
 @login_required
 def delete_account(request):
-    return render(request, "delete_account.html")
+    """
+    Confirmation page + delete on POST only
+    """
+    if request.method == "POST":
+        user = request.user
+        logout(request)
+        user.delete()
+        messages.success(request, "Your account has been deleted.")
+        return redirect("login")
+
+    return render(request, "delete_confirm.html")
+
 
 
 

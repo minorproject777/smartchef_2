@@ -30,10 +30,16 @@ urlpatterns = [
 
     path('settings/', views.settings_page, name='settings'),
     
-    path('delete-account/', views.delete_account, name='delete_account'),
+    path('settings/', views.settings_page, name='settings'),
+    path('delete-account/', views.delete_account, name='delete_confirm'),
+
+
     path("recipe/<int:recipe_id>/reply/<int:comment_id>/", views.add_reply, name="add_reply"),
     path("recipe/<int:recipe_id>/comment/<int:comment_id>/delete/", views.delete_comment, name="delete_comment"),
     path("recipe/<int:recipe_id>/reply/<int:reply_id>/delete/", views.delete_reply, name="delete_reply"),
+
+   
+
 
 
 

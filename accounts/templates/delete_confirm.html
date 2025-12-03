@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="delete-container">
+    <h2>Confirm Account Deletion</h2>
+    <p>This action <b>cannot be undone</b>. Are you sure?</p>
+
+    <form method="POST">
+        {% csrf_token %}
+        <button type="submit" class="delete-confirm-btn">Yes, Delete My Account</button>
+        <a href="{% url 'settings' %}" class="cancel-btn">Cancel</a>
+    </form>
+</div>
+{% endblock %}
