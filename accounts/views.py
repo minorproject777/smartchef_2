@@ -16,6 +16,7 @@ from django.contrib.auth import update_session_auth_hash
 from django.db.models import Count
 
 
+
 # Home page
 def index(request):
     return render(request, 'index.html')
@@ -435,9 +436,7 @@ def delete_reply(request, recipe_id, reply_id):
 
 
 
-from django.shortcuts import render, get_object_or_404
-from django.contrib.auth.decorators import login_required
-from .models import Recipe  # adjust path if needed
+
 
 
 @login_required
@@ -451,5 +450,4 @@ def recipe_likes_list(request, recipe_id):
         "recipe": recipe,
         "liked_users": liked_users
     })
-
 

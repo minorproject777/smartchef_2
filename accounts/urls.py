@@ -22,6 +22,7 @@ urlpatterns = [
     path("follow/<int:user_id>/", views.follow_user, name="follow_user"),
     path("unfollow/<int:user_id>/", views.unfollow_user, name="unfollow_user"),
     path("connections/<str:username>/", views.connections_view, name="connections"),
+    
 
     # urls.py
     path('dashboard/profile/<str:username>/', views.dashboard_profile, name='dashboard_profile'),
@@ -39,12 +40,7 @@ urlpatterns = [
     path("recipe/<int:recipe_id>/reply/<int:reply_id>/delete/", views.delete_reply, name="delete_reply"),
     path('recipe/<int:recipe_id>/likes/', views.recipe_likes_list, name='recipe_likes_list'),
 
-
-   
-
-
-
-
+    
 
 
 

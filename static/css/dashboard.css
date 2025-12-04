@@ -128,6 +128,7 @@ button {
     background: #f1f1f1; /* light subtle bg so it’s visible */
     font-size: 1rem;
     width: 400px;
+    margin-right: 100px;
 }
 
 
@@ -1114,6 +1115,7 @@ textarea:focus {
     justify-content: center;
     gap: 1rem;
     margin-bottom: 1rem;
+    
 }
 
 .tab-button {
@@ -1124,11 +1126,13 @@ textarea:focus {
     font-weight: bold;
     cursor: pointer;
     transition: 0.3s;
+    
 }
 
 .tab-button.active {
     background: #e5832d;
     color: #fff;
+    
 }
 
 .tab-content {
@@ -1167,8 +1171,8 @@ textarea:focus {
 
 .followers-list a {
     text-decoration: none;
-    color: #333;
-    font-weight: 500;
+    color: #050505;
+    font-weight: 600;
 }
 
 .follow-btn {
@@ -1265,6 +1269,23 @@ textarea:focus {
     width: 100%;
 }
 
+.logout-btn {
+   display: inline-block;
+    padding: 10px 16px;
+    background: #CA6D1C;
+    color: white;
+    border-radius: 6px;
+    text-decoration: none;
+    margin-top: 10px;
+    font-size: 14px;
+    margin-left: 11rem;
+}
+
+.logout-btn:hover {
+    background: #e5832d;
+}
+
+
 .submit-btn {
     padding: 10px 20px;
     background: #CA6D1C;
@@ -1339,4 +1360,91 @@ textarea:focus {
     text-align: center;
     margin-bottom: 1.5rem;
     font-size: 16px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.likes-container {
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.likes-title {
+    text-align: center;
+    color: #CA6D1C;
+    margin-bottom: 20px;
+}
+
+.likes-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.like-item {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    background: #f8f8f8;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    transition: 0.2s ease;
+}
+
+.like-item:hover {
+    background: #a5a4a372;
+}
+
+.profile-small {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 15px;
+    object-fit: cover;
+    border: 2px solid #ddd;
+}
+
+.user-link {
+    font-size: 16px;
+    color: #080707;
+    text-decoration: none;
+    font-weight: 600;
+    margin-left: 20px;
+}
+
+.back-btn {
+    display: inline-block;
+    margin-top: 20px;
+    text-decoration: none;
+    color: white;
+    background: #CA6D1C;
+    padding: 10px 15px;
+    border-radius: 6px;
+    transition: 0.3s ease;
+    margin-left: 25.8rem;
+}
+
+.back-btn:hover {
+    background: #e5832d;
+}
+
+.no-likes {
+    text-align: center;
+    color: #777;
+    margin-bottom: 20px;
 }

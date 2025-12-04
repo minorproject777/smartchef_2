@@ -48,7 +48,7 @@ body {
 /* Headings */
 h2 {
     margin-bottom: 1.5rem;
-    color: #0a5433;
+    color: #e78229;
     font-size: 2rem;
 }
 
@@ -73,7 +73,7 @@ input {
 button {
     margin-top: 1rem;
     padding: 0.8rem;
-    background: rgb(229,131,45);
+    background: #CA6D1C;
     color: #fff;
     border: none;
     border-radius: 8px;
@@ -82,7 +82,7 @@ button {
 }
 
 button:hover {
-    background: #09532a;
+    background: #e5832d;
 }
 
 /* Toggle links */

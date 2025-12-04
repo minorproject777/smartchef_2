@@ -1,21 +1,26 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
 
-<h2>People who liked: {{ recipe.title }}</h2>
+<div class="likes-container">
+    <h2 class="likes-title">People who liked: {{ recipe.title }}</h2>
 
-{% if liked_users %}
-    <ul class="likes-list">
-        {% for user in liked_users %}
-            <li>
-                <img src="{{ user.profile.profile_image.url }}" class="profile-small">
-                {{ user.username }}
-            </li>
-        {% endfor %}
-    </ul>
-{% else %}
-    <p>No likes yet.</p>
-{% endif %}
+    {% if liked_users %}
+        <ul class="likes-list">
+            {% for user in liked_users %}
+                <li class="like-item">
+                    <img src="{{ user.profile.profile_image.url }}" class="profile-small">
+                    <a href="{% url 'dashboard_profile' user.username %}" class="user-link">
+                        {{ user.username }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p class="no-likes">No likes yet.</p>
+    {% endif %}
 
-<a href="{% url 'recipe_detail' recipe.id %}" class="back-btn">← Back to Recipe</a>
+    <a href="{% url 'recipe_detail' recipe.id %}" class="back-btn">← Back to Recipe</a>
+</div>
 
 {% endblock %}

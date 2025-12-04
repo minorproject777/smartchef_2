@@ -6,6 +6,17 @@
 
     <h2 class="settings-title">Account Settings</h2>
 
+    <!-- LOGOUT SECTION -->
+    <div class="settings-box">
+    <button class="toggle-btn" onclick="toggleSection('logout-section')">
+        Logout?
+    </button>
+
+    <div id="logout-section" class="settings-content hidden">
+        <a href="{% url 'logout' %}" class="logout-btn">Yes, I want to logout.</a>
+    </div>
+    </div>
+
     <!-- CHANGE PASSWORD SECTION -->
     <div class="settings-box">
         <button class="toggle-btn" onclick="toggleSection('password-section')">
