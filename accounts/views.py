@@ -89,7 +89,8 @@ def dashboard_profile(request, username):
         'is_following': is_following,
         "total_likes": total_likes
     })
-     
+
+
 
 # Feed / Home Page
 @login_required
@@ -219,6 +220,7 @@ def recipe_detail(request, recipe_id):
     recipe = get_object_or_404(Recipe, id=recipe_id)
     if request.method == 'POST':
         content = request.POST.get('content')
+        messages.success(request,"Comment added successfully.")
         if content:
             comment = Comment.objects.create(user=request.user, recipe=recipe, content=content)
             if request.user != recipe.user:
@@ -226,7 +228,7 @@ def recipe_detail(request, recipe_id):
                     user=recipe.user,
                     from_user=request.user,
                     notif_type='comment',
-                    text=f"{request.user.username} commented on your recipe '{recipe.title}.'"
+                    text=f"{request.user.username} commented on your recipe '{recipe.title}'."
                 )
     return render(request, 'recipe_detail.html', {'recipe': recipe})
 
@@ -437,7 +439,7 @@ def add_reply(request, recipe_id, comment_id):
             Notification.objects.create(
                 user=recipe.user,
                 from_user=request.user,  # <-- set this!
-                text=f"{request.user.username} replied to a comment on your recipe '{recipe.title}'"
+                text=f"{request.user.username} replied to a comment on your recipe '{recipe.title}'."
             )
 
         # 2. Notify the original comment owner (if different from recipe owner and replier)
@@ -445,7 +447,7 @@ def add_reply(request, recipe_id, comment_id):
             Notification.objects.create(
                 user=comment.user,
                 from_user=request.user,  # <-- set this!
-                text=f"{request.user.username} replied to your comment on '{recipe.title}'"
+                text=f"{request.user.username} replied to your comment on '{recipe.title}'."
             )
 
     return redirect("recipe_detail", recipe_id=recipe_id)
@@ -464,14 +466,14 @@ def delete_comment(request, recipe_id, comment_id):
             Notification.objects.create(
                 user=recipe.user,
                 from_user=request.user,
-                text=f"{request.user.username} deleted a comment on your recipe '{recipe.title}'"
+                text=f"{request.user.username} deleted a comment on your recipe '{recipe.title}'."
             )
         
         if comment.user != recipe.user and comment.user != request.user:
             Notification.objects.create(
                 user=comment.user,
                 from_user=request.user,
-                text=f"{request.user.username} deleted your comment on '{recipe.title}'"
+                text=f"{request.user.username} deleted your comment on '{recipe.title}'."
             )
         messages.success(request, "Comment deleted.")
         comment.delete()
@@ -495,21 +497,21 @@ def delete_reply(request, recipe_id, reply_id):
             Notification.objects.create(
                 user=recipe.user,
                 from_user=request.user,
-                text=f"{request.user.username} deleted a reply on your recipe '{recipe.title}'"
+                text=f"{request.user.username} deleted a reply on your recipe '{recipe.title}'."
             )
         
         if reply.user != recipe.user and reply.user != request.user:
             Notification.objects.create(
                 user=reply.user,
                 from_user=request.user,
-                text=f"{request.user.username} deleted your reply on '{recipe.title}'"
+                text=f"{request.user.username} deleted your reply on '{recipe.title}'."
             )
 
         if comment.user != recipe.user and comment.user != request.user and comment.user != reply.user:
             Notification.objects.create(
                 user=comment.user,
                 from_user=request.user,
-                text=f"{request.user.username} deleted a reply on your comment in '{recipe.title}'"
+                text=f"{request.user.username} deleted a reply on your comment in '{recipe.title}'."
             )
         messages.success(request, "Reply deleted.")
         reply.delete()

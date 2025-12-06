@@ -128,7 +128,7 @@ button {
     background: #f1f1f1; /* light subtle bg so it’s visible */
     font-size: 1rem;
     width: 400px;
-    margin-right: 100px;
+    
 }
 
 
@@ -597,18 +597,18 @@ ul li {
     font-size: 2.5rem;
     font-weight: bold;
     text-align: center;
-    color: rgb(10, 86, 42);
+    color: #CA6D1C;
 }
 
 .recipe-author {
     font-size: 1rem;
-    color: #CA6D1C;
+    color: rgb(10, 86, 42);
     text-align: center;
     margin-bottom: 1rem;
 }
 
 .recipe-author:hover {
-    color: rgb(10, 86, 42);
+    color: #e5832d;
 }
 
 /* Media Section: Image & Video side by side */
@@ -802,7 +802,7 @@ ul li {
 
 .comments-section .comments p {
     margin-bottom: 0.5rem;
-    margin-top: -0.5rem;
+    margin-top: 1rem;
 }
 
 .comments-section form input[type="text"] {
@@ -1172,46 +1172,49 @@ textarea:focus {
 
 
 
-/* FOLLOWER PAGE*/
 
+
+
+
+
+/* FOLLOWER PAGE */
 .connections-container {
-    max-width: 600px;
+    max-width: 650px;
     margin: 2rem auto;
-    padding: 1.5rem;
+    padding: 1.8rem;
     background: #fff;
     border-radius: 1rem;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
 
 .connections-container h2 {
     text-align: center;
-    margin-bottom: 1.5rem;
-    color: #333;
+    color: #222;
+    font-size: 1.6rem;
+    margin-bottom: 1.2rem;
 }
 
 .tabs {
     display: flex;
     justify-content: center;
     gap: 1rem;
-    margin-bottom: 1rem;
-    
+    margin-bottom: 1.2rem;
 }
 
 .tab-button {
-    padding: 0.5rem 1.5rem;
+    padding: 0.55rem 1.6rem;
     border: none;
     border-radius: 2rem;
-    background: #eee;
-    font-weight: bold;
+    background: #efefef;
+    color: #333;
     cursor: pointer;
-    transition: 0.3s;
-    
+    font-weight: 600;
+    transition: all 0.25s ease;
 }
 
 .tab-button.active {
     background: #e5832d;
     color: #fff;
-    
 }
 
 .tab-content {
@@ -1224,15 +1227,15 @@ textarea:focus {
 
 .followers-list {
     list-style: none;
-    padding: 0;
     margin: 0;
+    padding: 0;
 }
 
 .followers-list li {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0.5rem 0;
+    padding: 0.7rem 0;
     border-bottom: 1px solid #eee;
 }
 
@@ -1240,38 +1243,63 @@ textarea:focus {
     border-bottom: none;
 }
 
+.user-info-connection {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    background: #fff;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 12px rgba(32,33,33,0.1);
+    margin:auto;
+    margin-top: 20px;
+    margin-bottom: -30px;
+    width: 95%;
+}
+
 .followers-list img {
-    width: 50px;
-    height: 50px;
+    width: 48px;
+    height: 48px;
     border-radius: 50%;
     object-fit: cover;
-    margin-right: 1rem;
 }
 
 .followers-list a {
-    text-decoration: none;
-    color: #050505;
     font-weight: 600;
+    color: #111;
+    text-decoration: none;
 }
 
 .follow-btn {
-    padding: 0.3rem 0.8rem;
-    border-radius: 2rem;
+    padding: 0.35rem 1rem;
+    border-radius: 1.5rem;
     border: none;
+    font-size: 0.9rem;
+    cursor: pointer;
+    font-weight: 600;
     background: #e5832d;
     color: #fff;
-    font-size: 0.85rem;
-    cursor: pointer;
-    transition: 0.3s;
+    transition: 0.25s;
+    margin-left: auto;
 }
 
 .follow-btn.following {
-    background: #eee;
-    color: #333;
+    background: #ddd;
+    color: #222;
 }
 
 .follow-btn:hover {
-    opacity: 0.8;
+    opacity: 0.85;
+}
+
+.empty {
+    text-align: center;
+    color: #888;
+    margin-top: 1rem;
 }
 
 
@@ -1478,11 +1506,17 @@ textarea:focus {
 .like-item {
     display: flex;
     align-items: center;
-    padding: 12px;
-    background: #f8f8f8;
-    border-radius: 10px;
     margin-bottom: 10px;
-    transition: 0.2s ease;
+    transition: 0.2s ease;  
+    height: 70px;
+    gap: 2rem;
+    background: #fff;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 12px rgba(32,33,33,0.1);
+    margin:auto;
+    margin-top: 20px;
+    width: 95%;
 }
 
 .like-item:hover {
@@ -1515,7 +1549,7 @@ textarea:focus {
     padding: 10px 15px;
     border-radius: 6px;
     transition: 0.3s ease;
-    margin-left: 25.8rem;
+    margin-left: 25rem;
 }
 
 .back-btn:hover {
@@ -1552,6 +1586,12 @@ textarea:focus {
     background: #ffffff;
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+.notifications-container h2 {
+    text-align: center;
+    color: #CA6D1C;
+    margin-bottom: 20px;
+
 }
 
 .notifications-list {

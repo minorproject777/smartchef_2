@@ -15,7 +15,7 @@ class Profile(models.Model):
     upload_to='profile_pics/',
     blank=True,
     null=True,
-)
+    )
 
     def __str__(self):
         return self.user.username

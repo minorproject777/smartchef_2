@@ -4,113 +4,136 @@
 
 {% block content %}
 <section class="connections-container">
+
     <h2>{{ user.username }}</h2>
 
     <!-- Tabs -->
     <div class="tabs">
-        <button class="tab-button active" data-tab="followers">Followers ({{ followers|length }})</button>
-        <button class="tab-button" data-tab="following">Following ({{ following|length }})</button>
+        <button id="followers-tab" class="tab-button active" data-tab="followers">Followers ({{ followers|length }})</button>
+        <button id="following-tab" class="tab-button" data-tab="following">Following ({{ following|length }})</button>
+
     </div>
 
-    <!-- Followers List -->
-<div id="followers" class="tab-content active">
-    <ul class="followers-list">
-        {% for f in followers %}
-            <li>
-                <img src="{% if f.user.profile.profile_image %}{{ f.user.profile.profile_image.url }}{% else %}{% static 'images/default.jpg' %}{% endif %}" alt="">
+    <!-- CSRF -->
+    <form style="display:none;">
+        {% csrf_token %}
+    </form>
 
-                <a href="{% url 'dashboard_profile' f.user.username %}">
-                    <span>{{ f.user.username }}</span>
-                </a>
+    <!-- Followers Tab -->
+    <div id="followers" class="tab-content active">
+        <ul class="followers-list">
+            {% for f in followers %}
+            <li>
+                <div class="user-info-connection">
+                    <img src="{% if f.user.profile.profile_image %}{{ f.user.profile.profile_image.url }}{% else %}{% static 'images/default.jpg' %}{% endif %}">
+                    <a href="{% url 'dashboard_profile' f.user.username %}">{{ f.user.username }}</a>
+                
                 {% if f.user != request.user %}
-                    {% if f.is_following %}
-                        <a href="{% url 'unfollow_user' f.user.id %}" class="btn">Unfollow</a>
-                    {% else %}
-                        <a href="{% url 'follow_user' f.user.id %}" class="btn">Follow</a>
-                    {% endif %}
+                    <button 
+                        class="follow-btn {% if f.is_following %}following{% endif %}" 
+                        data-user-id="{{ f.user.id }}">
+                        {% if f.is_following %}Unfollow{% else %}Follow{% endif %}
+                    </button>
                 {% endif %}
+                </div>
+
+                
             </li>
-        {% empty %}
+            {% empty %}
             <p class="empty">No followers yet.</p>
-        {% endfor %}
-    </ul>
-</div>
+            {% endfor %}
+        </ul>
+    </div>
 
-<!-- Following List -->
-<div id="following" class="tab-content">
-    <ul class="followers-list">
-        {% for f in following %}
+    <!-- Following Tab -->
+    <div id="following" class="tab-content">
+        <ul class="followers-list">
+            {% for f in following %}
             <li>
-                <img src="{% if f.user.profile.profile_image %}{{ f.user.profile.profile_image.url }}{% else %}{% static 'images/default.jpg' %}{% endif %}" alt="">
-
-                <a href="{% url 'dashboard_profile' f.user.username %}" class="username">
-                    <span>{{ f.user.username }}</span>
-                </a>
-            </li>
-            {% if f.user != request.user %}
-                    {% if f.is_following %}
-                        <a href="{% url 'unfollow_user' f.user.id %}" class="btn">Unfollow</a>
-                    {% else %}
-                        <a href="{% url 'follow_user' f.user.id %}" class="btn">Follow</a>
-                    {% endif %}
+                <div class="user-info-connection">
+                    <img src="{% if f.user.profile.profile_image %}{{ f.user.profile.profile_image.url }}{% else %}{% static 'images/default.jpg' %}{% endif %}">
+                    <a href="{% url 'dashboard_profile' f.user.username %}">{{ f.user.username }}</a>
+                
+                {% if f.user != request.user %}
+                    <button 
+                        class="follow-btn {% if f.is_following %}following{% endif %}" 
+                        data-user-id="{{ f.user.id }}">
+                        {% if f.is_following %}Unfollow{% else %}Follow{% endif %}
+                    </button>
                 {% endif %}
+                </div>
+
+                
+            </li>
             {% empty %}
             <p class="empty">Not following anyone yet.</p>
-        {% endfor %}
-    </ul>
-</div>
+            {% endfor %}
+        </ul>
+    </div>
 
 </section>
 
+
 <script>
-    // TAB SWITCHING
-    const tabButtons = document.querySelectorAll('.tab-button');
-    const tabContents = document.querySelectorAll('.tab-content');
+/* ---------------- TAB SWITCHING ---------------- */
+const tabButtons = document.querySelectorAll('.tab-button');
+const tabContents = document.querySelectorAll('.tab-content');
 
-    tabButtons.forEach(btn => {
-        btn.addEventListener('click', () => {
-            tabButtons.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
+tabButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+        tabButtons.forEach(b => b.classList.remove('active'));
+        tabContents.forEach(c => c.classList.remove('active'));
 
-            tabContents.forEach(tc => tc.classList.remove('active'));
-            document.getElementById(btn.dataset.tab).classList.add('active');
-        });
+        btn.classList.add('active');
+        document.getElementById(btn.dataset.tab).classList.add('active');
     });
+});
 
-    // FOLLOW / UNFOLLOW AJAX
-    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+/* ---------------- AJAX FOLLOW / UNFOLLOW ---------------- */
+const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 
-    function ajaxFollow(userId, action, button) {
-        fetch(`/ajax/follow/${userId}/`, {
-            method: 'POST',
-            headers: {
-                'X-CSRFToken': csrftoken,
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ action: action }),
-        })
-        .then(res => res.json())
-        .then(data => {
-            if(data.status === 'ok') {
-                if(action === 'follow') {
-                    button.textContent = 'Unfollow';
-                    button.classList.add('following');
-                    button.dataset.action = 'unfollow';
-                } else {
-                    button.textContent = 'Follow';
-                    button.classList.remove('following');
-                    button.dataset.action = 'follow';
-                }
+// Select tab buttons
+const followersTab = document.getElementById("followers-tab");
+const followingTab = document.getElementById("following-tab");
+
+function ajaxFollow(userId, action, button) {
+    fetch(`/ajax/follow/${userId}/`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrftoken,
+        },
+        body: JSON.stringify({ action: action }),
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.status === "ok") {
+            if (action === "follow") {
+                button.textContent = "Unfollow";
+                button.classList.add("following");
+
+                // Only update your following count
+                followingTab.textContent = `Following (${parseInt(followingTab.textContent.match(/\d+/)[0]) + 1})`;
+            } else {
+                button.textContent = "Follow";
+                button.classList.remove("following");
+
+                // Only update your following count
+                followingTab.textContent = `Following (${parseInt(followingTab.textContent.match(/\d+/)[0]) - 1})`;
             }
-        });
-    }
-
-    document.querySelectorAll('.follow-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const userId = btn.dataset.userId;
-            const action = btn.classList.contains('following') ? 'unfollow' : 'follow';
-            ajaxFollow(userId, action, btn);
-        });
+        }
     });
+}
+
+
+
+document.querySelectorAll('.follow-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        const userId = btn.dataset.userId;
+        const action = btn.classList.contains("following") ? "unfollow" : "follow";
+        ajaxFollow(userId, action, btn);
+    });
+});
 </script>
+
 {% endblock %}
